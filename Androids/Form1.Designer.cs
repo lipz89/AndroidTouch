@@ -41,7 +41,7 @@
             this.btnAdb = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.lblTick = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSplit)).BeginInit();
             this.pnlMain.SuspendLayout();
@@ -85,7 +85,7 @@
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(8, 167);
+            this.btnPause.Location = new System.Drawing.Point(8, 244);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);
             this.btnPause.TabIndex = 6;
@@ -123,14 +123,9 @@
             // 
             this.tbSplit.AutoSize = false;
             this.tbSplit.Location = new System.Drawing.Point(8, 102);
-            this.tbSplit.Maximum = 5000;
-            this.tbSplit.Minimum = 100;
             this.tbSplit.Name = "tbSplit";
             this.tbSplit.Size = new System.Drawing.Size(148, 30);
-            this.tbSplit.SmallChange = 100;
             this.tbSplit.TabIndex = 11;
-            this.tbSplit.TickFrequency = 500;
-            this.tbSplit.Value = 100;
             // 
             // lblLocation
             // 
@@ -151,7 +146,7 @@
             // 
             // pnlMain
             // 
-            this.pnlMain.Controls.Add(this.listBox1);
+            this.pnlMain.Controls.Add(this.checkBox1);
             this.pnlMain.Controls.Add(this.lblTick);
             this.pnlMain.Controls.Add(this.btnChoose);
             this.pnlMain.Controls.Add(this.btnStart);
@@ -175,14 +170,15 @@
             this.lblTick.Size = new System.Drawing.Size(0, 12);
             this.lblTick.TabIndex = 13;
             // 
-            // listBox1
+            // checkBox1
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(3, 196);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(186, 220);
-            this.listBox1.TabIndex = 14;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(8, 172);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(72, 16);
+            this.checkBox1.TabIndex = 14;
+            this.checkBox1.Text = "忽略宝箱";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -222,7 +218,7 @@
         private System.Windows.Forms.Button btnAdb;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Label lblTick;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

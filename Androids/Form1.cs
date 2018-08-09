@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -22,8 +23,6 @@ namespace Androids
         private int count = 0;
         private readonly DriveDetector detector;
         private bool isRunning = false;
-        private int backTick = 7000;
-        private int backTimes = 10, backRealTime = 0;
         private Point boxLocaltion = new Point(520, 1064);
         private Point backLocaltion = new Point(520, 1650);
 
@@ -47,40 +46,35 @@ namespace Androids
             this.btnStart.Click += BtnStart_Click;
             this.btnPause.Click += BtnPause_Click;
             this.tbSplit.ValueChanged += TbSplit_ValueChanged;
-            this.tbSplit.Value = 500;
+            this.tbSplit.Value = 6;
         }
 
         private void Detector_UsbChanged(object sender, EventArgs e)
         {
+            Thread.Sleep(1000);
             GetMobileInfo();
             ChangeState();
         }
 
         private void TbSplit_ValueChanged(object sender, EventArgs e)
         {
-            lblTick.Text = this.tbSplit.Value + "豪秒";
+            if (this.tbSplit.Value == 0)
+                lblTick.Text = "500豪秒";
+            else
+                lblTick.Text = this.tbSplit.Value + "秒";
         }
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             count++;
-
-            var p = this.point;
-            if (backRealTime == backTimes)
-                p = backLocaltion;
-            else if (backRealTime % 2 == 1)
-                p = boxLocaltion;
-
             lblCount.Text = count.ToString();
-            listBox1.Items.Insert(0, backRealTime.ToString().PadRight(4) + ":" + p);
-            if (listBox1.Items.Count > 100)
+            this.adbRunner.Tap(this.backLocaltion.X, this.backLocaltion.Y);
+            if (!checkBox1.Checked)
             {
-                listBox1.Items.RemoveAt(100);
+                this.adbRunner.Tap(this.boxLocaltion.X, this.boxLocaltion.Y);
             }
-            backRealTime++;
-            if (backRealTime > backTimes)
-                backRealTime = 0;
-            this.adbRunner.Tap(p.X, p.Y);
+
+            this.adbRunner.Tap(this.point.X, this.point.Y);
         }
 
         private void BtnPause_Click(object sender, EventArgs e)
@@ -92,16 +86,12 @@ namespace Androids
 
         private void BtnStart_Click(object sender, EventArgs e)
         {
-            listBox1.Items.Clear();
             this.adbRunner.Tap(this.point.X, this.point.Y);
-            listBox1.Items.Add("0   :" + this.point.ToString());
 
-            backTimes = backTick / this.tbSplit.Value;
-            if (backTimes % 2 == 1)
-                backTimes++;
-            backRealTime = 1;
-
-            this.timer.Interval = this.tbSplit.Value;
+            if (this.tbSplit.Value == 0)
+                this.timer.Interval = 500;
+            else
+                this.timer.Interval = this.tbSplit.Value * 1000;
             this.timer.Start();
             isRunning = true;
             ChangeState();
@@ -112,7 +102,9 @@ namespace Androids
             this.btnStart.Enabled = !isRunning;
             this.btnChoose.Enabled = !isRunning;
             this.tbSplit.Enabled = !isRunning;
+            this.checkBox1.Enabled = !isRunning;
             this.btnPause.Enabled = isRunning;
+            this.pnlMain.Enabled = isMobileConnect;
             if (isRunning)
             {
                 if (isMobileConnect)
