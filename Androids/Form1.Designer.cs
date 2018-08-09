@@ -41,6 +41,7 @@
             this.btnAdb = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.lblTick = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSplit)).BeginInit();
             this.pnlMain.SuspendLayout();
@@ -122,12 +123,14 @@
             // 
             this.tbSplit.AutoSize = false;
             this.tbSplit.Location = new System.Drawing.Point(8, 102);
-            this.tbSplit.Maximum = 100;
+            this.tbSplit.Maximum = 5000;
+            this.tbSplit.Minimum = 100;
             this.tbSplit.Name = "tbSplit";
             this.tbSplit.Size = new System.Drawing.Size(148, 30);
+            this.tbSplit.SmallChange = 100;
             this.tbSplit.TabIndex = 11;
-            this.tbSplit.TickFrequency = 10;
-            this.tbSplit.Value = 1;
+            this.tbSplit.TickFrequency = 500;
+            this.tbSplit.Value = 100;
             // 
             // lblLocation
             // 
@@ -148,6 +151,7 @@
             // 
             // pnlMain
             // 
+            this.pnlMain.Controls.Add(this.listBox1);
             this.pnlMain.Controls.Add(this.lblTick);
             this.pnlMain.Controls.Add(this.btnChoose);
             this.pnlMain.Controls.Add(this.btnStart);
@@ -170,6 +174,15 @@
             this.lblTick.Name = "lblTick";
             this.lblTick.Size = new System.Drawing.Size(0, 12);
             this.lblTick.TabIndex = 13;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(3, 196);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(186, 220);
+            this.listBox1.TabIndex = 14;
             // 
             // Form1
             // 
@@ -209,6 +222,7 @@
         private System.Windows.Forms.Button btnAdb;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Label lblTick;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
