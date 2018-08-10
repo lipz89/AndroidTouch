@@ -44,6 +44,13 @@ namespace Androids
             return Run("shell getprop ro.product.model");
         }
 
+        public bool Connect(string ip, uint port)
+        {
+            Run("tcpip " + port);
+            Run("connect " + ip);
+            return true;
+        }
+
         private readonly Regex sizeReg = new Regex(@"\d+x\d+");
         public Size GetMobileSize()
         {

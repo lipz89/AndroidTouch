@@ -21,7 +21,7 @@ namespace Androids
         private double picRate = 1;
         private readonly System.Timers.Timer timer;
         private int count = 0;
-        private readonly DriveDetector detector;
+        private DriveDetector detector;
         private bool isRunning = false;
         private Point boxLocaltion = new Point(520, 1064);
         private Point backLocaltion = new Point(520, 1650);
@@ -36,17 +36,58 @@ namespace Androids
             btnAdb.Visible = false;
             pnlMain.Enabled = false;
             pb.SizeMode = PictureBoxSizeMode.Zoom;
-            detector = new DriveDetector();
-            detector.UsbChanged += Detector_UsbChanged;
             this.Shown += Form1_Load;
             this.btnAdb.Click += BtnAdb_Click;
             this.btnChoose.Click += BtnChoose_Click;
             this.pb.MouseClick += Pb_Click;
 
+            txtIP.Visible = false;
+            btnConnect.Visible = false;
+            chkWifi.CheckedChanged += ChkWifi_CheckedChanged;
+            btnConnect.Click += BtnConnect_Click;
+
             this.btnStart.Click += BtnStart_Click;
             this.btnPause.Click += BtnPause_Click;
             this.tbSplit.ValueChanged += TbSplit_ValueChanged;
             this.tbSplit.Value = 6;
+        }
+
+        private void BtnConnect_Click(object sender, EventArgs e)
+        {
+            if (chkWifi.Checked)
+            {
+                if (isLoadAdb)
+                {
+                    var ip = txtIP.Text.Trim();
+
+                    var flag = adbRunner.Connect(ip, 5555);
+                    if (flag)
+                    {
+                        btnConnect.Text = "已连接";
+                        GetMobileInfo();
+                    }
+                    else
+                    {
+                        MessageBox.Show("连接失败。");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ADB库文件未加载。");
+                }
+            }
+            ChangeState();
+        }
+
+        private void ChkWifi_CheckedChanged(object sender, EventArgs e)
+        {
+            btnConnect.Visible = txtIP.Visible = chkWifi.Checked;
+            if (!chkWifi.Checked)
+            {
+                btnConnect.Text = "连接";
+                detector = new DriveDetector();
+                detector.UsbChanged += Detector_UsbChanged;
+            }
         }
 
         private void Detector_UsbChanged(object sender, EventArgs e)
@@ -100,7 +141,7 @@ namespace Androids
         private void ChangeState()
         {
             this.btnStart.Enabled = !isRunning;
-            this.btnChoose.Enabled = !isRunning;
+            //this.btnChoose.Enabled = !isRunning;
             this.tbSplit.Enabled = !isRunning;
             this.checkBox1.Enabled = !isRunning;
             this.btnPause.Enabled = isRunning;
@@ -120,7 +161,7 @@ namespace Androids
 
         private void Pb_Click(object sender, MouseEventArgs e)
         {
-            if (pb.Image == null || this.timer.Enabled)
+            if (pb.Image == null)
                 return;
 
             var x = e.X * picRate;
@@ -160,7 +201,6 @@ namespace Androids
             {
                 adbRunner = new AdbRunner(adbPath);
                 isLoadAdb = true;
-                GetMobileInfo();
             }
             else
             {
@@ -187,7 +227,10 @@ namespace Androids
                 var width = this.mobileSize.Width / picRate;
                 this.pb.Height = (int)width;
 
-                SetScreen();
+                if (pb.Image == null)
+                {
+                    SetScreen();
+                }
             }
         }
 
@@ -221,6 +264,10 @@ namespace Androids
                 lblAdb.Text = "就绪。";
                 pnlMain.Enabled = true;
                 CreateAdbRunner();
+                if (isLoadAdb)
+                {
+                    GetMobileInfo();
+                }
             }
             ChangeState();
         }
@@ -269,8 +316,12 @@ namespace Androids
 
         protected override void WndProc(ref Message m)
         {
-            bool handled = false;
-            detector.WndProc(m.HWnd, m.Msg, m.WParam, m.LParam, ref handled);
+            if (detector != null)
+            {
+                bool handled = false;
+                detector.WndProc(m.HWnd, m.Msg, m.WParam, m.LParam, ref handled);
+            }
+
             base.WndProc(ref m);
         }
     }

@@ -40,8 +40,11 @@
             this.lblLocation = new System.Windows.Forms.Label();
             this.btnAdb = new System.Windows.Forms.Button();
             this.pnlMain = new System.Windows.Forms.Panel();
-            this.lblTick = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.lblTick = new System.Windows.Forms.Label();
+            this.chkWifi = new System.Windows.Forms.CheckBox();
+            this.txtIP = new System.Windows.Forms.TextBox();
+            this.btnConnect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbSplit)).BeginInit();
             this.pnlMain.SuspendLayout();
@@ -62,7 +65,7 @@
             this.btnChoose.Name = "btnChoose";
             this.btnChoose.Size = new System.Drawing.Size(75, 23);
             this.btnChoose.TabIndex = 3;
-            this.btnChoose.Text = "选择坐标";
+            this.btnChoose.Text = "获取截图";
             this.btnChoose.UseVisualStyleBackColor = true;
             // 
             // btnStart
@@ -71,7 +74,7 @@
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 4;
-            this.btnStart.Text = "开始点击";
+            this.btnStart.Text = "开始";
             this.btnStart.UseVisualStyleBackColor = true;
             // 
             // pb
@@ -89,7 +92,7 @@
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(75, 23);
             this.btnPause.TabIndex = 6;
-            this.btnPause.Text = "暂停点击";
+            this.btnPause.Text = "暂停";
             this.btnPause.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -157,18 +160,10 @@
             this.pnlMain.Controls.Add(this.lblCount);
             this.pnlMain.Controls.Add(this.label3);
             this.pnlMain.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlMain.Location = new System.Drawing.Point(0, 61);
+            this.pnlMain.Location = new System.Drawing.Point(0, 88);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Size = new System.Drawing.Size(189, 419);
+            this.pnlMain.Size = new System.Drawing.Size(189, 392);
             this.pnlMain.TabIndex = 14;
-            // 
-            // lblTick
-            // 
-            this.lblTick.AutoSize = true;
-            this.lblTick.Location = new System.Drawing.Point(89, 78);
-            this.lblTick.Name = "lblTick";
-            this.lblTick.Size = new System.Drawing.Size(0, 12);
-            this.lblTick.TabIndex = 13;
             // 
             // checkBox1
             // 
@@ -180,11 +175,49 @@
             this.checkBox1.Text = "忽略宝箱";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // lblTick
+            // 
+            this.lblTick.AutoSize = true;
+            this.lblTick.Location = new System.Drawing.Point(89, 78);
+            this.lblTick.Name = "lblTick";
+            this.lblTick.Size = new System.Drawing.Size(0, 12);
+            this.lblTick.TabIndex = 13;
+            // 
+            // chkWifi
+            // 
+            this.chkWifi.AutoSize = true;
+            this.chkWifi.Location = new System.Drawing.Point(12, 39);
+            this.chkWifi.Name = "chkWifi";
+            this.chkWifi.Size = new System.Drawing.Size(72, 16);
+            this.chkWifi.TabIndex = 15;
+            this.chkWifi.Text = "WIFI模式";
+            this.chkWifi.UseVisualStyleBackColor = true;
+            // 
+            // txtIP
+            // 
+            this.txtIP.Location = new System.Drawing.Point(11, 61);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(100, 21);
+            this.txtIP.TabIndex = 16;
+            this.txtIP.Text = "192.168.0.104";
+            // 
+            // btnConnect
+            // 
+            this.btnConnect.Location = new System.Drawing.Point(112, 60);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(55, 23);
+            this.btnConnect.TabIndex = 17;
+            this.btnConnect.Text = "连接";
+            this.btnConnect.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(459, 480);
+            this.Controls.Add(this.btnConnect);
+            this.Controls.Add(this.txtIP);
+            this.Controls.Add(this.chkWifi);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.btnAdb);
             this.Controls.Add(this.pb);
@@ -219,6 +252,9 @@
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Label lblTick;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkWifi;
+        private System.Windows.Forms.TextBox txtIP;
+        private System.Windows.Forms.Button btnConnect;
     }
 }
 
