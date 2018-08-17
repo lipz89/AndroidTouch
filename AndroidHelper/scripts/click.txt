@@ -1,0 +1,10 @@
+﻿@name 单击脚本
+@desc 选择坐标持续单击
+
+@par point 坐标 point
+@par wait=100 间隔 int
+@par time=100 次数 int
+
+loop:循环 @time @wait
+	tap @point
+loopend

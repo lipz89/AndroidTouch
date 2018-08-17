@@ -1,0 +1,12 @@
+﻿@name 刷副本
+@desc 手机端定位到副本页面后开始
+
+@par point 坐标 point
+@par wait=3000 间隔 int
+
+loop:循环 1000
+	tap @point
+	tap 520 1064
+	#wait @wait
+	tap 0 0
+loopend

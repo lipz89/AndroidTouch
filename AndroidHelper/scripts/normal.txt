@@ -1,0 +1,13 @@
+﻿@name 刷普通怪
+@desc 手机端定位到普通地图内后开始
+
+@par point 坐标 point
+@par wait=4000 间隔 int
+
+loop:循环 1000
+	tap @point
+	#wait @wait
+	tap 520 1064
+	tap 520 1650
+	tap 0 0
+loopend
