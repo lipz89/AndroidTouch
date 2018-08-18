@@ -25,10 +25,8 @@ namespace AndroidHelper
             CheckForIllegalCrossThreadCalls = false;
             detector = new DriveDetector();
             detector.UsbChanged += Detector_UsbChanged;
-            pnlSet.Top = this.Height - 95;
-            btnConnect.Left = btnLoad.Left;
             btnConnect.Click += BtnConnect_Click;
-            btnLoad.Click += BtnLoad_Click;
+            lblInfo1.Click += BtnLoad_Click;
             rdoUsb.CheckedChanged += RdoUsb_CheckedChanged;
             rdoWifi.CheckedChanged += RdoUsb_CheckedChanged;
             lblInfo1.Text = "正在初始化...";
@@ -36,13 +34,20 @@ namespace AndroidHelper
 
             btnRun.Enabled = false;
             btnPause.Enabled = false;
+            btnParams.Enabled = false;
             btnSelect.Click += BtnSelect_Click;
             btnRun.Click += BtnRun_Click;
             btnPause.Click += BtnPause_Click;
+            btnParams.Click += BtnParams_Click;
             selector.Selected += Selector_Selected;
             this.Closing += FrmMain_Closing;
 
             this.Shown += FrmMain_Shown; ;
+        }
+
+        private void BtnParams_Click(object sender, EventArgs e)
+        {
+            script?.SetParameters();
         }
 
         private void FrmMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -64,6 +69,7 @@ namespace AndroidHelper
                 script.CommandRunned += Script_CommandRunned;
 
                 btnRun.Enabled = true;
+                btnParams.Enabled = script.HasParameters;
             }
         }
 
@@ -200,8 +206,15 @@ namespace AndroidHelper
 
         private void BtnLoad_Click(object sender, EventArgs e)
         {
-            Global.LoadAdb();
-            SetState();
+            if (!Global.IsLoaded)
+            {
+                Global.LoadAdb();
+                SetState();
+            }
+            else
+            {
+                pnlSet.Visible = true;
+            }
         }
 
         private void BtnConnect_Click(object sender, EventArgs e)
@@ -219,7 +232,7 @@ namespace AndroidHelper
             }
             else
             {
-                Global.GetMobileInfo();
+                Global.Disconnect();
             }
 
             SetState();
@@ -240,10 +253,13 @@ namespace AndroidHelper
                 if (Global.IsWifi)
                 {
                     info = $"[{Global.IP}]" + info;
+                    rdoWifi.Checked = true;
+                    txtIp.Text = Global.IP;
                 }
                 else
                 {
                     info = $"[USB]" + info;
+                    rdoUsb.Checked = true;
                 }
                 lblInfo1.Text = info;
                 pnlSet.Visible = false;
@@ -251,22 +267,10 @@ namespace AndroidHelper
             else if (Global.IsLoaded)
             {
                 lblInfo1.Text = Global.Info;
-                pnlSet.Visible = true;
-                btnLoad.Visible = false;
-                btnConnect.Visible = true;
-                rdoUsb.Visible = true;
-                rdoWifi.Visible = true;
-                txtIp.Visible = true;
             }
             else
             {
                 lblInfo1.Text = "未加载ADB文件。";
-                pnlSet.Visible = true;
-                btnLoad.Visible = true;
-                btnConnect.Visible = false;
-                rdoUsb.Visible = false;
-                rdoWifi.Visible = false;
-                txtIp.Visible = false;
             }
         }
 

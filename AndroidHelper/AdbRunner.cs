@@ -89,7 +89,7 @@ namespace AndroidHelper
                     var index = line.IndexOf(":", StringComparison.Ordinal);
                     ip = line.Substring(0, index);
                 }
-                if (lines.All(x => x.EndsWith("offline")))
+                if (lines.Any(x => x.EndsWith("offline")))
                 {
                     message = "设备不在线。";
                     return false;
@@ -100,6 +100,12 @@ namespace AndroidHelper
 
             message = "未连接到手机";
             return false;
+        }
+
+        public bool Disconnect()
+        {
+            var txt = Run("disconnect");
+            return true;
         }
 
         public bool Connect(string ip, uint port, out string message)
@@ -122,13 +128,17 @@ namespace AndroidHelper
         }
 
         private readonly Regex sizeReg = new Regex(@"\d+x\d+");
-        public Size GetMobileSize()
+        public Size? GetMobileSize()
         {
             var text = Run("shell \"dumpsys window | grep mUnrestrictedScreen\"");
             var match = sizeReg.Match(text);
-            var size = match.Value;
-            var sizes = size.Split('x');
-            return new Size(int.Parse(sizes[0]), int.Parse(sizes[1]));
+            if (match.Success)
+            {
+                var size = match.Value;
+                var sizes = size.Split('x');
+                return new Size(int.Parse(sizes[0]), int.Parse(sizes[1]));
+            }
+            return null;
         }
         public Image GetShotScreent()
         {

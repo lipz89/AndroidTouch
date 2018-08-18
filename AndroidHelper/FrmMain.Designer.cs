@@ -35,31 +35,31 @@
             this.lblInfo2 = new System.Windows.Forms.Label();
             this.lblScriptInfo = new System.Windows.Forms.Label();
             this.pnlSet = new System.Windows.Forms.Panel();
-            this.txtIp = new System.Windows.Forms.TextBox();
+            this.btnConnect = new System.Windows.Forms.Button();
             this.rdoWifi = new System.Windows.Forms.RadioButton();
             this.rdoUsb = new System.Windows.Forms.RadioButton();
-            this.btnConnect = new System.Windows.Forms.Button();
-            this.btnLoad = new System.Windows.Forms.Button();
+            this.txtIp = new System.Windows.Forms.TextBox();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.btnParams = new System.Windows.Forms.Button();
             this.pnlSet.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(253, 12);
+            this.btnRun.Location = new System.Drawing.Point(228, 12);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(75, 23);
+            this.btnRun.Size = new System.Drawing.Size(61, 23);
             this.btnRun.TabIndex = 2;
             this.btnRun.Text = "开始(&S)";
             this.btnRun.UseVisualStyleBackColor = true;
             // 
             // btnPause
             // 
-            this.btnPause.Location = new System.Drawing.Point(334, 12);
+            this.btnPause.Location = new System.Drawing.Point(295, 12);
             this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(75, 23);
+            this.btnPause.Size = new System.Drawing.Size(61, 23);
             this.btnPause.TabIndex = 3;
             this.btnPause.Text = "暂停(&P)";
             this.btnPause.UseVisualStyleBackColor = true;
@@ -105,74 +105,62 @@
             // pnlSet
             // 
             this.pnlSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlSet.Controls.Add(this.txtIp);
+            this.pnlSet.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlSet.Controls.Add(this.btnConnect);
             this.pnlSet.Controls.Add(this.rdoWifi);
             this.pnlSet.Controls.Add(this.rdoUsb);
-            this.pnlSet.Controls.Add(this.btnConnect);
-            this.pnlSet.Controls.Add(this.btnLoad);
-            this.pnlSet.Location = new System.Drawing.Point(219, 182);
+            this.pnlSet.Controls.Add(this.txtIp);
+            this.pnlSet.Location = new System.Drawing.Point(5, 117);
             this.pnlSet.Name = "pnlSet";
-            this.pnlSet.Size = new System.Drawing.Size(200, 56);
+            this.pnlSet.Size = new System.Drawing.Size(163, 87);
             this.pnlSet.TabIndex = 8;
             this.pnlSet.Visible = false;
             // 
-            // txtIp
+            // btnConnect
             // 
-            this.txtIp.Location = new System.Drawing.Point(98, 6);
-            this.txtIp.Name = "txtIp";
-            this.txtIp.Size = new System.Drawing.Size(99, 21);
-            this.txtIp.TabIndex = 4;
-            this.txtIp.Visible = false;
+            this.btnConnect.Location = new System.Drawing.Point(9, 57);
+            this.btnConnect.Name = "btnConnect";
+            this.btnConnect.Size = new System.Drawing.Size(41, 23);
+            this.btnConnect.TabIndex = 1;
+            this.btnConnect.Text = "连接";
+            this.btnConnect.UseVisualStyleBackColor = true;
             // 
             // rdoWifi
             // 
             this.rdoWifi.AutoSize = true;
-            this.rdoWifi.Location = new System.Drawing.Point(50, 8);
+            this.rdoWifi.Location = new System.Drawing.Point(9, 9);
             this.rdoWifi.Name = "rdoWifi";
             this.rdoWifi.Size = new System.Drawing.Size(47, 16);
             this.rdoWifi.TabIndex = 3;
             this.rdoWifi.TabStop = true;
             this.rdoWifi.Text = "WIFI";
             this.rdoWifi.UseVisualStyleBackColor = true;
-            this.rdoWifi.Visible = false;
             // 
             // rdoUsb
             // 
             this.rdoUsb.AutoSize = true;
-            this.rdoUsb.Location = new System.Drawing.Point(3, 8);
+            this.rdoUsb.Location = new System.Drawing.Point(9, 34);
             this.rdoUsb.Name = "rdoUsb";
             this.rdoUsb.Size = new System.Drawing.Size(41, 16);
             this.rdoUsb.TabIndex = 2;
             this.rdoUsb.TabStop = true;
             this.rdoUsb.Text = "USB";
             this.rdoUsb.UseVisualStyleBackColor = true;
-            this.rdoUsb.Visible = false;
             // 
-            // btnConnect
+            // txtIp
             // 
-            this.btnConnect.Location = new System.Drawing.Point(122, 30);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(75, 23);
-            this.btnConnect.TabIndex = 1;
-            this.btnConnect.Text = "连接手机";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Visible = false;
-            // 
-            // btnLoad
-            // 
-            this.btnLoad.Location = new System.Drawing.Point(3, 30);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(75, 23);
-            this.btnLoad.TabIndex = 0;
-            this.btnLoad.Text = "选择ADB";
-            this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Visible = false;
+            this.txtIp.Location = new System.Drawing.Point(56, 8);
+            this.txtIp.Name = "txtIp";
+            this.txtIp.Size = new System.Drawing.Size(99, 21);
+            this.txtIp.TabIndex = 4;
             // 
             // pnlMain
             // 
             this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlMain.Controls.Add(this.btnParams);
+            this.pnlMain.Controls.Add(this.pnlSet);
             this.pnlMain.Controls.Add(this.listBox1);
             this.pnlMain.Controls.Add(this.btnSelect);
             this.pnlMain.Controls.Add(this.btnRun);
@@ -195,12 +183,20 @@
             this.listBox1.Size = new System.Drawing.Size(397, 160);
             this.listBox1.TabIndex = 8;
             // 
+            // btnParams
+            // 
+            this.btnParams.Location = new System.Drawing.Point(362, 12);
+            this.btnParams.Name = "btnParams";
+            this.btnParams.Size = new System.Drawing.Size(47, 23);
+            this.btnParams.TabIndex = 9;
+            this.btnParams.Text = "参数";
+            this.btnParams.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(421, 236);
-            this.Controls.Add(this.pnlSet);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.lblInfo2);
             this.Controls.Add(this.lblInfo1);
@@ -228,12 +224,12 @@
         private System.Windows.Forms.Label lblScriptInfo;
         private System.Windows.Forms.Panel pnlSet;
         private System.Windows.Forms.Button btnConnect;
-        private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.TextBox txtIp;
         private System.Windows.Forms.RadioButton rdoWifi;
         private System.Windows.Forms.RadioButton rdoUsb;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button btnParams;
     }
 }
 

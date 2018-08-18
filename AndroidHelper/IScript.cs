@@ -98,9 +98,23 @@ namespace AndroidHelper
                     IsWifi = true;
                     IP = ip;
                 }
+                else
+                {
+                    IsWifi = false;
+                }
 
-                MobileSize = Runner.GetMobileSize();
+                var size = Runner.GetMobileSize();
+                if (size.HasValue)
+                {
+                    MobileSize = size.Value;
+                }
             }
+        }
+
+        public static void Disconnect()
+        {
+            Runner.Disconnect();
+            GetMobileInfo();
         }
         public static void Connect(string ip)
         {
@@ -125,6 +139,7 @@ namespace AndroidHelper
         IScriptContext Context { get; }
         string Name { get; }
         string Desc { get; }
+        bool HasParameters { get; }
 
         event EventHandler Stopped;
         event EventHandler<CommondRunArgs> CommandRunning;
@@ -412,8 +427,6 @@ namespace AndroidHelper
             this.context = new ScriptContext();
             this.context.Status = Status.Inited;
         }
-
-
         public void Start()
         {
             if (parameters.Any(x => x.Value == null))
@@ -483,6 +496,7 @@ namespace AndroidHelper
         public IScriptContext Context => context;
         public string Name { get; set; }
         public string Desc { get; set; }
+        public bool HasParameters => this.parameters.Any();
 
         public event EventHandler<CommondRunArgs> CommandRunning
         {
@@ -673,7 +687,8 @@ namespace AndroidHelper
         ICommand ParseCommand(string line, List<IParameter> parameters, int depth = 0)
         {
             bool isFast = line.StartsWith("*");
-            line = line.Substring(1).Trim();
+            if (isFast)
+                line = line.Substring(1).Trim();
             if (line.StartsWith("tap", StringComparison.OrdinalIgnoreCase))
             {
                 var pars = line.Substring(3).Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);

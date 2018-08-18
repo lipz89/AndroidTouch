@@ -4,9 +4,10 @@
 @par point 坐标 point
 @par wait=4000 间隔 int
 
-loop:循环 0 @wait
-	tap 0 0
+loop:循环
 	tap @point
+	tap @point
+	#wait @wait
 	tap 520 1064
 	tap 520 1650
 loopend

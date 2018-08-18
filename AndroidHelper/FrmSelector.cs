@@ -124,6 +124,14 @@ namespace AndroidHelper
             }
 
             pnlScripts.AutoScroll = true;
+            if (last != null)
+            {
+                last.BackColor = this.BackColor;
+                last.ForeColor = this.ForeColor;
+            }
+
+            info = null;
+            last = null;
         }
 
         private List<ScriptInfo> GetAll()
