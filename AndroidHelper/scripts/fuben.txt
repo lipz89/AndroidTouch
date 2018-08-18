@@ -2,11 +2,11 @@
 @desc 手机端定位到副本页面后开始
 
 @par point 坐标 point
-@par wait=3000 间隔 int
+@par wait=500 间隔 int
 
-loop:循环 1000
+loop:循环 0 @wait
 	tap @point
-	tap 520 1064
-	#wait @wait
-	tap 0 0
+	tap @point
+	tap 495 1230
+	tap 795 1230
 loopend

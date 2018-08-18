@@ -110,6 +110,7 @@
     <Content Include="scripts\click.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="scripts\fast.txt" />
     <Content Include="scripts\fuben.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

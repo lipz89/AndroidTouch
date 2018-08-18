@@ -40,12 +40,20 @@ namespace AndroidHelper
             btnRun.Click += BtnRun_Click;
             btnPause.Click += BtnPause_Click;
             selector.Selected += Selector_Selected;
+            this.Closing += FrmMain_Closing;
 
             this.Shown += FrmMain_Shown; ;
         }
 
+        private void FrmMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.script?.Dispose();
+        }
+
         private void Selector_Selected(object sender, ScriptSelectedArgs e)
         {
+            script?.Dispose();
+
             script = e.Script;
             if (script != null)
             {

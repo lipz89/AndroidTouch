@@ -167,9 +167,18 @@ namespace AndroidHelper
             Run($"shell input tap {point.X} {point.Y}");
         }
 
+        public void FastTap(Point point)
+        {
+            RunWithoutResult($"shell input tap {point.X} {point.Y}");
+        }
+
         public void Swipe(Point from, Point to)
         {
             Run($"shell input swipe {from.X} {from.Y} {to.X} {to.Y}");
+        }
+        public void FastSwipe(Point from, Point to)
+        {
+            RunWithoutResult($"shell input swipe {from.X} {from.Y} {to.X} {to.Y}");
         }
         public void Tap(int x, int y)
         {

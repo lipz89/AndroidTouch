@@ -6,5 +6,5 @@
 @par time=100 次数 int
 
 loop:循环 @time @wait
-	tap @point
+	*tap @point
 loopend

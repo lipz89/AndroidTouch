@@ -115,7 +115,7 @@ namespace AndroidHelper
             }
         }
     }
-    interface IScript
+    interface IScript : IDisposable
     {
         void Start();
         void Stop();
@@ -140,6 +140,7 @@ namespace AndroidHelper
     {
         void Run(IScriptContext token);
         bool IsValid { get; }
+        bool IsFast { get; }
         void Reset();
         int Depth { get; }
     }
@@ -205,6 +206,9 @@ namespace AndroidHelper
             this.RunCore(token);
             token.Runned(this);
         }
+
+        public bool IsFast { get; set; }
+
         public virtual void Reset()
         {
 
@@ -273,8 +277,16 @@ namespace AndroidHelper
 
         protected override void RunCore(IScriptContext token)
         {
-            Global.Runner.Tap(Point.Value);
+            if (IsFast)
+            {
+                Global.Runner.FastTap(Point.Value);
+            }
+            else
+            {
+                Global.Runner.Tap(Point.Value);
+            }
         }
+
         public override string ToString()
         {
             return new string(' ', Depth * 4) + $"点击：({Point})";
@@ -288,7 +300,14 @@ namespace AndroidHelper
         public override bool IsValid => From.Value != To.Value;
         protected override void RunCore(IScriptContext token)
         {
-            Global.Runner.Swipe(From.Value, To.Value);
+            if (IsFast)
+            {
+                Global.Runner.FastSwipe(From.Value, To.Value);
+            }
+            else
+            {
+                Global.Runner.Swipe(From.Value, To.Value);
+            }
         }
         public override string ToString()
         {
@@ -385,6 +404,7 @@ namespace AndroidHelper
         private readonly ScriptContext context;
         private readonly List<ICommand> commands;
         private readonly List<IParameter> parameters;
+        private Thread thread;
         public Script(List<ICommand> commands, List<IParameter> parameters)
         {
             this.commands = commands.ToList();
@@ -408,8 +428,9 @@ namespace AndroidHelper
             {
                 command.Reset();
             }
-
-            var thread = new Thread(() =>
+            thread?.DisableComObjectEagerCleanup();
+            thread?.Abort();
+            thread = new Thread(() =>
             {
                 foreach (var command in commands)
                 {
@@ -421,7 +442,10 @@ namespace AndroidHelper
 
                 context.Status = context.IsCancel ? Status.Cancelled : Status.Finished;
                 stopped?.Invoke(this, EventArgs.Empty);
+                Thread.CurrentThread.DisableComObjectEagerCleanup();
+                Thread.CurrentThread.Abort();
             });
+            thread.IsBackground = true;
             thread.Start();
         }
         public void Stop()
@@ -481,6 +505,12 @@ namespace AndroidHelper
         {
             add => needParameters += value;
             remove => needParameters -= value;
+        }
+
+        public void Dispose()
+        {
+            thread?.DisableComObjectEagerCleanup();
+            thread?.Abort();
         }
     }
 
@@ -642,6 +672,8 @@ namespace AndroidHelper
 
         ICommand ParseCommand(string line, List<IParameter> parameters, int depth = 0)
         {
+            bool isFast = line.StartsWith("*");
+            line = line.Substring(1).Trim();
             if (line.StartsWith("tap", StringComparison.OrdinalIgnoreCase))
             {
                 var pars = line.Substring(3).Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
@@ -652,7 +684,8 @@ namespace AndroidHelper
                     return new TapCommand
                     {
                         Point = new RealValue<Point>(new Point { X = x, Y = y }),
-                        Depth = depth
+                        Depth = depth,
+                        IsFast = isFast
                     };
                 }
                 if (pars.Length == 1 && pars[0].StartsWith("@"))
@@ -663,7 +696,8 @@ namespace AndroidHelper
                         return new TapCommand
                         {
                             Point = point,
-                            Depth = depth
+                            Depth = depth,
+                            IsFast = isFast
                         };
                     }
                 }
@@ -682,7 +716,8 @@ namespace AndroidHelper
                         {
                             From = new RealValue<Point>(new Point { X = fromx, Y = fromy }),
                             To = new RealValue<Point>(new Point { X = tox, Y = toy }),
-                            Depth = depth
+                            Depth = depth,
+                            IsFast = isFast
                         };
                     }
                 }
@@ -699,7 +734,8 @@ namespace AndroidHelper
                             {
                                 From = new RealValue<Point>(new Point { X = fromx, Y = fromy }),
                                 To = point2,
-                                Depth = depth
+                                Depth = depth,
+                                IsFast = isFast
                             };
                         }
                     }
@@ -714,7 +750,8 @@ namespace AndroidHelper
                             {
                                 From = point1,
                                 To = new RealValue<Point>(new Point { X = tox, Y = toy }),
-                                Depth = depth
+                                Depth = depth,
+                                IsFast = isFast
                             };
                         }
                     }
@@ -729,7 +766,8 @@ namespace AndroidHelper
                         {
                             From = point1,
                             To = point2,
-                            Depth = depth
+                            Depth = depth,
+                            IsFast = isFast
                         };
                     }
                 }
