@@ -164,21 +164,21 @@ namespace AndroidHelper
 
         public void Tap(Point point)
         {
-            RunWithoutResult($"shell input tap {point.X} {point.Y}");
+            Run($"shell input tap {point.X} {point.Y}");
         }
 
         public void Swipe(Point from, Point to)
         {
-            RunWithoutResult($"shell input swipe {from.X} {from.Y} {to.X} {to.Y}");
+            Run($"shell input swipe {from.X} {from.Y} {to.X} {to.Y}");
         }
         public void Tap(int x, int y)
         {
-            RunWithoutResult($"shell input tap {x} {y}");
+            Run($"shell input tap {x} {y}");
         }
 
         public void Swipe(int fromX, int fromY, int toX, int toY)
         {
-            RunWithoutResult($"shell input swipe {fromX} {fromY} {toX} {toY}");
+            Run($"shell input swipe {fromX} {fromY} {toX} {toY}");
         }
     }
 }

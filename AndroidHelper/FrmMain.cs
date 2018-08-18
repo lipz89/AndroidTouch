@@ -25,7 +25,7 @@ namespace AndroidHelper
             CheckForIllegalCrossThreadCalls = false;
             detector = new DriveDetector();
             detector.UsbChanged += Detector_UsbChanged;
-            pnlSet.Top = this.Height - 70;
+            pnlSet.Top = this.Height - 95;
             btnConnect.Left = btnLoad.Left;
             btnConnect.Click += BtnConnect_Click;
             btnLoad.Click += BtnLoad_Click;
@@ -91,6 +91,7 @@ namespace AndroidHelper
                 Log("-->停止");
                 script.Stop();
                 btnRun.Text = START_BUTTON_TEXT;
+                btnPause.Text = PAUSE_BUTTON_TEXT;
                 btnSelect.Enabled = true;
             }
             SetScriptState();
@@ -136,6 +137,7 @@ namespace AndroidHelper
             {
                 Log("-->全部执行完成");
                 btnRun.Text = START_BUTTON_TEXT;
+                btnPause.Text = PAUSE_BUTTON_TEXT;
                 btnSelect.Enabled = true;
                 SetScriptState();
             });
