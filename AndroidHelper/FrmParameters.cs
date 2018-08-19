@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -28,6 +30,13 @@ namespace AndroidHelper
         {
             pbRate = Global.MobileSize.Height * 1.0 / this.pbScreen.Height;
             this.pbScreen.Width = (int)(Global.MobileSize.Width / pbRate);
+            if (File.Exists(AdbRunner.IMG_PATH))
+            {
+                using (var stream = File.Open(AdbRunner.IMG_PATH, FileMode.Open))
+                {
+                    pbScreen.Image = Image.FromStream(stream);
+                }
+            }
         }
 
         private void BtnOk_Click(object sender, EventArgs e)

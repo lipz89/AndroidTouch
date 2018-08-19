@@ -1,0 +1,6 @@
+﻿namespace AndroidHelper
+{
+    interface ICommandInfo
+    {
+    }
+}

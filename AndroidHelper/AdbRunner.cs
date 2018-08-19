@@ -12,7 +12,7 @@ namespace AndroidHelper
     {
         private readonly string adbPath;
         private const string IMG_MOBILE_PATH = "/sdcard/_1.png";
-        private const string IMG_PATH = "_.png";
+        internal const string IMG_PATH = "_.png";
 
         public AdbRunner(string adbPath)
         {

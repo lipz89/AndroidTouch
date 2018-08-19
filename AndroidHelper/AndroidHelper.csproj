@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdbRunner.cs" />
+    <Compile Include="BaseCommond.cs" />
+    <Compile Include="CommondRunArgs.cs" />
     <Compile Include="DriveDetector.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
@@ -65,15 +67,35 @@
     <Compile Include="FrmSelector.Designer.cs">
       <DependentUpon>FrmSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="ICommandInfo.cs" />
+    <Compile Include="ILoopCommand.cs" />
+    <Compile Include="IParameter.cs" />
     <Compile Include="IScript.cs" />
+    <Compile Include="IScriptContext.cs" />
+    <Compile Include="IValue.cs" />
+    <Compile Include="LoopCommand.cs" />
+    <Compile Include="NeedParameterArgs.cs" />
+    <Compile Include="Parameter.cs" />
+    <Compile Include="ParameterType.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealValue.cs" />
+    <Compile Include="Script.cs" />
+    <Compile Include="ScriptContext.cs" />
+    <Compile Include="Status.cs" />
+    <Compile Include="SwipeCommand.cs" />
+    <Compile Include="TapCommand.cs" />
     <Compile Include="UcParameter.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UcParameter.Designer.cs">
       <DependentUpon>UcParameter.cs</DependentUpon>
     </Compile>
+    <Compile Include="WaitCommond.cs" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
