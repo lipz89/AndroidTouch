@@ -44,6 +44,7 @@ namespace AndroidHelper
             var flag = true;
             foreach (var ucParameter in pnlParameters.Controls.OfType<UcParameter>())
             {
+                ucParameter.Apply();
                 flag &= ucParameter.HasValue();
             }
 

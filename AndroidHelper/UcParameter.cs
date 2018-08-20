@@ -8,8 +8,9 @@ namespace AndroidHelper
     {
         private IParameter parameter;
         private object rawValue = null;
-        private Color green = Color.Green;
-        private Color red = Color.PaleVioletRed;
+        private object newValue = null;
+        private Color green = Color.LightGreen;
+        private Color red = Color.HotPink;
 
         public UcParameter()
         {
@@ -60,15 +61,13 @@ namespace AndroidHelper
         {
             if (this.parameter.Type == ParameterType.Int)
             {
-                var p = this.parameter as IParameter<int>;
                 if (int.TryParse(txtValue.Text.Trim(), out var i))
                 {
-                    p.Value = i;
+                    newValue = i;
                     SetColor(green);
                 }
                 else
                 {
-                    p.Value = 0;
                     SetColor(Color.PaleVioletRed);
                 }
             }
@@ -93,9 +92,8 @@ namespace AndroidHelper
             {
                 if (value is int)
                 {
-                    var p = this.parameter as IParameter<int>;
                     var i = (int)value;
-                    p.Value = i;
+                    newValue = i;
                     this.txtValue.Text = i.ToString();
                     SetColor(green);
                     return;
@@ -105,10 +103,9 @@ namespace AndroidHelper
             {
                 if (value is Point)
                 {
-                    var p = this.parameter as IParameter<Point>;
                     var point = (Point)value;
                     var valStr = $"{point.X} {point.Y}";
-                    p.Value = point;
+                    newValue = point;
                     this.txtValue.Text = valStr;
                     SetColor(green);
                     return;
@@ -118,9 +115,8 @@ namespace AndroidHelper
             {
                 if (value is string)
                 {
-                    var p = this.parameter as IParameter<string>;
                     var val = (string)value;
-                    p.Value = val;
+                    newValue = val;
                     this.txtValue.Text = val;
                     SetColor(green);
                     return;
@@ -145,12 +141,37 @@ namespace AndroidHelper
 
         private void SetColor(Color color)
         {
-            this.txtValue.ForeColor = color;
+            this.txtValue.BackColor = color;
         }
 
         public bool HasValue()
         {
             return this.parameter.Value != null;
+        }
+
+        public void Apply()
+        {
+            if (this.parameter.Type == ParameterType.Int)
+            {
+                if (newValue is int i && parameter is Parameter<int> p)
+                {
+                    p.Value = i;
+                }
+            }
+            else if (this.parameter.Type == ParameterType.Point)
+            {
+                if (newValue is Point i && parameter is Parameter<Point> p)
+                {
+                    p.Value = i;
+                }
+            }
+            else
+            {
+                if (newValue is string i && parameter is Parameter<string> p)
+                {
+                    p.Value = i;
+                }
+            }
         }
     }
 }

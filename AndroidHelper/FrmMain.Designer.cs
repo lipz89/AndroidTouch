@@ -17,6 +17,8 @@
             {
                 components.Dispose();
             }
+            this.niIcon.Dispose();
+            this.hotkey.Dispose();
             base.Dispose(disposing);
         }
 
@@ -28,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnSelect = new System.Windows.Forms.Button();
@@ -40,8 +43,9 @@
             this.rdoUsb = new System.Windows.Forms.RadioButton();
             this.txtIp = new System.Windows.Forms.TextBox();
             this.pnlMain = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.btnParams = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.niIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.pnlSet.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
@@ -156,8 +160,8 @@
             // 
             // pnlMain
             // 
-            this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlMain.Controls.Add(this.btnParams);
             this.pnlMain.Controls.Add(this.pnlSet);
@@ -171,18 +175,6 @@
             this.pnlMain.Size = new System.Drawing.Size(421, 210);
             this.pnlMain.TabIndex = 9;
             // 
-            // listBox1
-            // 
-            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(12, 41);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(397, 160);
-            this.listBox1.TabIndex = 8;
-            // 
             // btnParams
             // 
             this.btnParams.Location = new System.Drawing.Point(362, 12);
@@ -191,6 +183,23 @@
             this.btnParams.TabIndex = 9;
             this.btnParams.Text = "参数";
             this.btnParams.UseVisualStyleBackColor = true;
+            // 
+            // listBox1
+            // 
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(12, 41);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(397, 160);
+            this.listBox1.TabIndex = 8;
+            // 
+            // niIcon
+            // 
+            this.niIcon.Text = "猜猜我是谁";
+            this.niIcon.Visible = true;
             // 
             // FrmMain
             // 
@@ -230,6 +239,7 @@
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button btnParams;
+        private System.Windows.Forms.NotifyIcon niIcon;
     }
 }
 

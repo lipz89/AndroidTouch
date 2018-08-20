@@ -7,6 +7,7 @@ namespace AndroidHelper
 {
     public partial class FrmMain : Form
     {
+        private readonly Hotkey hotkey;
         private readonly DriveDetector detector;
         private readonly Regex regexIP = new Regex(@"^((25[0-5]|2[0-4]\d|[1]\d{2}|[1-9]\d|\d)($|(?!\.$)\.)){4}$");
 
@@ -15,13 +16,12 @@ namespace AndroidHelper
         private const string PAUSE_BUTTON_TEXT = "暂停(&P)";
         private const string CONTINUE_BUTTON_TEXT = "继续(&P)";
 
-        private readonly FrmSelector selector = new FrmSelector();
-        private readonly FrmParameters parameters = new FrmParameters();
         private IScript script = null;
 
         public FrmMain()
         {
             InitializeComponent();
+            hotkey = new Hotkey(this.Handle);
             CheckForIllegalCrossThreadCalls = false;
             detector = new DriveDetector();
             detector.UsbChanged += Detector_UsbChanged;
@@ -39,10 +39,37 @@ namespace AndroidHelper
             btnRun.Click += BtnRun_Click;
             btnPause.Click += BtnPause_Click;
             btnParams.Click += BtnParams_Click;
-            selector.Selected += Selector_Selected;
             this.Closing += FrmMain_Closing;
 
-            this.Shown += FrmMain_Shown; ;
+            this.Shown += FrmMain_Shown;
+            this.niIcon.Icon = this.Icon;
+            this.niIcon.Visible = true;
+            this.niIcon.DoubleClick += NiIcon_DoubleClick;
+            this.RegisterHotKeys();
+        }
+        private void NiIcon_DoubleClick(object sender, EventArgs e)
+        {
+            this.ShowOrDisplay();
+        }
+
+        private void RegisterHotKeys()
+        {
+            this.hotkey.RegisterHotkey(Keys.D,
+                Hotkey.KeyFlags.Alt | Hotkey.KeyFlags.Ctrl | Hotkey.KeyFlags.Shift,
+                this.ShowOrDisplay);
+            this.hotkey.RegisterHotkey(Keys.P,
+                Hotkey.KeyFlags.Alt | Hotkey.KeyFlags.Ctrl | Hotkey.KeyFlags.Shift,
+                this.btnPause.PerformClick);
+        }
+
+        private void ShowOrDisplay()
+        {
+            this.Visible = !this.Visible;
+            if (this.Visible)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.Activate();
+            }
         }
 
         private void BtnParams_Click(object sender, EventArgs e)
@@ -75,6 +102,10 @@ namespace AndroidHelper
 
         private void BtnPause_Click(object sender, EventArgs e)
         {
+            if (!btnPause.Enabled)
+            {
+                return;
+            }
             if (btnPause.Text == PAUSE_BUTTON_TEXT)
             {
                 Log("-->暂停");
@@ -112,6 +143,7 @@ namespace AndroidHelper
         }
         internal void NeedParameters(object sender, NeedParameterArgs e)
         {
+            var parameters = new FrmParameters();
             parameters.SetParameters(e.Parameters);
             var dlgResult = parameters.ShowDialog(this);
             if (dlgResult != DialogResult.OK)
@@ -121,6 +153,8 @@ namespace AndroidHelper
         }
         private void BtnSelect_Click(object sender, EventArgs e)
         {
+            var selector = new FrmSelector();
+            selector.Selected += Selector_Selected;
             selector.ShowDialog(this);
         }
 
@@ -276,10 +310,13 @@ namespace AndroidHelper
 
         protected override void WndProc(ref Message m)
         {
-            if (!Global.IsWifi)
+            if (m.Msg == DriveDetector.NativeConstants.WM_DEVICECHANGE)
             {
-                bool handled = false;
-                detector.WndProc(m.HWnd, m.Msg, m.WParam, m.LParam, ref handled);
+                if (!Global.IsWifi)
+                {
+                    bool handled = false;
+                    detector.WndProc(m.HWnd, m.Msg, m.WParam, m.LParam, ref handled);
+                }
             }
 
             base.WndProc(ref m);

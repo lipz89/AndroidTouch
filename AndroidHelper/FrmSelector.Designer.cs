@@ -32,6 +32,8 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.pnlScripts = new System.Windows.Forms.Panel();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.tvInfos = new System.Windows.Forms.TreeView();
+            this.pnlScripts.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOk
@@ -56,6 +58,7 @@
             // 
             // pnlScripts
             // 
+            this.pnlScripts.Controls.Add(this.tvInfos);
             this.pnlScripts.Location = new System.Drawing.Point(12, 12);
             this.pnlScripts.Name = "pnlScripts";
             this.pnlScripts.Size = new System.Drawing.Size(390, 241);
@@ -69,6 +72,17 @@
             this.btnRefresh.TabIndex = 3;
             this.btnRefresh.Text = "刷新(&R)";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            // 
+            // tvInfos
+            // 
+            this.tvInfos.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvInfos.HotTracking = true;
+            this.tvInfos.ItemHeight = 19;
+            this.tvInfos.Location = new System.Drawing.Point(0, 0);
+            this.tvInfos.Name = "tvInfos";
+            this.tvInfos.ShowNodeToolTips = true;
+            this.tvInfos.Size = new System.Drawing.Size(390, 241);
+            this.tvInfos.TabIndex = 0;
             // 
             // FrmSelector
             // 
@@ -87,6 +101,7 @@
             this.Name = "FrmSelector";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "脚本选择";
+            this.pnlScripts.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -97,5 +112,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Panel pnlScripts;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.TreeView tvInfos;
     }
 }

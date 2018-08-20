@@ -46,8 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdbRunner.cs" />
-    <Compile Include="BaseCommond.cs" />
-    <Compile Include="CommondRunArgs.cs" />
+    <Compile Include="Commands\BaseCommond.cs" />
+    <Compile Include="Commands\CommondRunArgs.cs" />
+    <Compile Include="Commands\ScriptSelectedArgs.cs" />
     <Compile Include="DriveDetector.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
@@ -68,34 +69,35 @@
       <DependentUpon>FrmSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="ICommandInfo.cs" />
-    <Compile Include="ILoopCommand.cs" />
-    <Compile Include="IParameter.cs" />
-    <Compile Include="IScript.cs" />
-    <Compile Include="IScriptContext.cs" />
-    <Compile Include="IValue.cs" />
-    <Compile Include="LoopCommand.cs" />
-    <Compile Include="NeedParameterArgs.cs" />
-    <Compile Include="Parameter.cs" />
-    <Compile Include="ParameterType.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="Point.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ICommandInfo.cs" />
+    <Compile Include="Commands\ILoopCommand.cs" />
+    <Compile Include="Commands\IParameter.cs" />
+    <Compile Include="Commands\IScript.cs" />
+    <Compile Include="Commands\IScriptContext.cs" />
+    <Compile Include="Commands\IValue.cs" />
+    <Compile Include="Commands\LoopCommand.cs" />
+    <Compile Include="Commands\NeedParameterArgs.cs" />
+    <Compile Include="Commands\Parameter.cs" />
+    <Compile Include="Commands\ParameterType.cs" />
+    <Compile Include="Commands\Parser.cs" />
+    <Compile Include="Commands\Point.cs" />
+    <Compile Include="Hotkey.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RealValue.cs" />
-    <Compile Include="Script.cs" />
-    <Compile Include="ScriptContext.cs" />
-    <Compile Include="Status.cs" />
-    <Compile Include="SwipeCommand.cs" />
-    <Compile Include="TapCommand.cs" />
+    <Compile Include="Commands\RealValue.cs" />
+    <Compile Include="Commands\Script.cs" />
+    <Compile Include="Commands\ScriptContext.cs" />
+    <Compile Include="Commands\Status.cs" />
+    <Compile Include="Commands\SwipeCommand.cs" />
+    <Compile Include="Commands\TapCommand.cs" />
     <Compile Include="UcParameter.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UcParameter.Designer.cs">
       <DependentUpon>UcParameter.cs</DependentUpon>
     </Compile>
-    <Compile Include="WaitCommond.cs" />
+    <Compile Include="Commands\WaitCommond.cs" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,5 +142,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

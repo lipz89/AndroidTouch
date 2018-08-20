@@ -7,24 +7,10 @@ namespace AndroidHelper
 {
     class Parser
     {
-        private static Regex parName = new Regex("@[a-z]*", RegexOptions.IgnoreCase);
-        public Script Parse(string script)
+        public Script Parse(string script, string name, string desc)
         {
             var lines = script.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
 
-            string name = "[未命名]";
-            var nameLine = lines.FirstOrDefault(x => x.StartsWith("@name", StringComparison.OrdinalIgnoreCase));
-            if (nameLine != null)
-            {
-                name = nameLine.Replace("@name", "").Trim();
-            }
-
-            string desc = "";
-            var descLine = lines.FirstOrDefault(x => x.StartsWith("@desc", StringComparison.OrdinalIgnoreCase));
-            if (descLine != null)
-            {
-                desc = descLine.Replace("@desc", "").Trim();
-            }
             var loopCommands = new Stack<Loop>();
             loopCommands.Push(new Loop());
             var pars = new List<IParameter>();
@@ -36,8 +22,10 @@ namespace AndroidHelper
 
             foreach (var line in lines.Where(x => !x.StartsWith("@")))
             {
-                //var txtLine = parName.Replace(line, match => pars.First(x => x.Name == match.Value).Value.ToString());
-
+                if (line.StartsWith("@name") || line.StartsWith("@desc"))
+                {
+                    continue;
+                }
                 if (line.StartsWith("loop:", StringComparison.OrdinalIgnoreCase))
                 {
                     var lp = new Loop();
@@ -96,30 +84,6 @@ namespace AndroidHelper
                         IsFast = isFast
                     };
                 }
-                //if (pars.Length == 2 &&
-                //    int.TryParse(pars[0], out int x) &&
-                //    int.TryParse(pars[1], out int y))
-                //{
-                //    return new TapCommand
-                //    {
-                //        Point = new RealValue<Point>(new Point { X = x, Y = y }),
-                //        Depth = depth,
-                //        IsFast = isFast
-                //    };
-                //}
-                //if (pars.Length == 1 && pars[0].StartsWith("@"))
-                //{
-                //    var arg = parameters.FirstOrDefault(p => p.Name == pars[0]);
-                //    if (arg is IValue<Point> point)
-                //    {
-                //        return new TapCommand
-                //        {
-                //            Point = point,
-                //            Depth = depth,
-                //            IsFast = isFast
-                //        };
-                //    }
-                //}
             }
             if (line.StartsWith("swipe", StringComparison.OrdinalIgnoreCase))
             {
@@ -138,72 +102,6 @@ namespace AndroidHelper
                         IsFast = isFast
                     };
                 }
-                //if (pars.Length == 4)
-                //{
-                //    if (int.TryParse(pars[0], out int fromx) &&
-                //        int.TryParse(pars[1], out int fromy) &&
-                //        int.TryParse(pars[2], out int tox) &&
-                //        int.TryParse(pars[3], out int toy))
-                //    {
-                //        return new SwipeCommand
-                //        {
-                //            From = new RealValue<Point>(new Point { X = fromx, Y = fromy }),
-                //            To = new RealValue<Point>(new Point { X = tox, Y = toy }),
-                //            Depth = depth,
-                //            IsFast = isFast
-                //        };
-                //    }
-                //}
-                //if (pars.Length == 3)
-                //{
-                //    if (int.TryParse(pars[0], out int fromx) &&
-                //        int.TryParse(pars[1], out int fromy) &&
-                //        pars[2].StartsWith("@"))
-                //    {
-                //        var arg2 = parameters.FirstOrDefault(p => p.Name == pars[0]);
-                //        if (arg2 is IValue<Point> point2)
-                //        {
-                //            return new SwipeCommand
-                //            {
-                //                From = new RealValue<Point>(new Point { X = fromx, Y = fromy }),
-                //                To = point2,
-                //                Depth = depth,
-                //                IsFast = isFast
-                //            };
-                //        }
-                //    }
-                //    if (int.TryParse(pars[1], out int tox) &&
-                //        int.TryParse(pars[2], out int toy) &&
-                //        pars[0].StartsWith("@"))
-                //    {
-                //        var arg1 = parameters.FirstOrDefault(p => p.Name == pars[0]);
-                //        if (arg1 is IValue<Point> point1)
-                //        {
-                //            return new SwipeCommand
-                //            {
-                //                From = point1,
-                //                To = new RealValue<Point>(new Point { X = tox, Y = toy }),
-                //                Depth = depth,
-                //                IsFast = isFast
-                //            };
-                //        }
-                //    }
-                //}
-                //if (pars.Length == 2 && pars[0].StartsWith("@") && pars[1].StartsWith("@"))
-                //{
-                //    var arg1 = parameters.FirstOrDefault(p => p.Name == pars[0]);
-                //    var arg2 = parameters.FirstOrDefault(p => p.Name == pars[0]);
-                //    if (arg1 is IValue<Point> point1 && arg2 is IValue<Point> point2)
-                //    {
-                //        return new SwipeCommand
-                //        {
-                //            From = point1,
-                //            To = point2,
-                //            Depth = depth,
-                //            IsFast = isFast
-                //        };
-                //    }
-                //}
             }
             if (line.StartsWith("#wait", StringComparison.OrdinalIgnoreCase))
             {

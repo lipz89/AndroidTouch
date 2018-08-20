@@ -52,11 +52,6 @@ namespace AndroidHelper
             return RunAdb(command, true);
         }
 
-        private IList<string> GetLines(string txt)
-        {
-            return txt.Split("\r\n".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-        }
-
         public bool IsTheGame()
         {
             var txt = Run("shell \"dumpsys activity | grep mFocusedActivity\"");
