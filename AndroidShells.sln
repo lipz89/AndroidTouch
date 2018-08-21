@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidHelper", "AndroidHel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestShell", "TestShell\TestShell.csproj", "{7667FF51-E52A-4ACC-A454-30EBB16B66FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHotKeys", "TestHotKeys\TestHotKeys.csproj", "{AB710801-E1FD-4E9D-B565-0469818A4FB7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{7667FF51-E52A-4ACC-A454-30EBB16B66FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7667FF51-E52A-4ACC-A454-30EBB16B66FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7667FF51-E52A-4ACC-A454-30EBB16B66FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB710801-E1FD-4E9D-B565-0469818A4FB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB710801-E1FD-4E9D-B565-0469818A4FB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB710801-E1FD-4E9D-B565-0469818A4FB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB710801-E1FD-4E9D-B565-0469818A4FB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

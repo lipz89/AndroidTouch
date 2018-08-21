@@ -170,7 +170,12 @@ namespace AndroidHelper
             }
 
             var dir = new DirectoryInfo(ROOT);
-            return GetSubTree(dir);
+            if (dir.Exists)
+            {
+                return GetSubTree(dir);
+            }
+
+            return new List<ScriptInfo>();
         }
 
         class ScriptInfo

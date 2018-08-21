@@ -21,8 +21,8 @@ namespace AndroidHelper
         public FrmMain()
         {
             InitializeComponent();
-            hotkey = new Hotkey(this.Handle);
             CheckForIllegalCrossThreadCalls = false;
+            hotkey = new Hotkey(this.Handle);
             detector = new DriveDetector();
             detector.UsbChanged += Detector_UsbChanged;
             btnConnect.Click += BtnConnect_Click;
@@ -49,7 +49,7 @@ namespace AndroidHelper
         }
         private void NiIcon_DoubleClick(object sender, EventArgs e)
         {
-            this.ShowOrDisplay();
+            this.PauseOrContinue();
         }
 
         private void RegisterHotKeys()
@@ -59,7 +59,7 @@ namespace AndroidHelper
                 this.ShowOrDisplay);
             this.hotkey.RegisterHotkey(Keys.P,
                 Hotkey.KeyFlags.Alt | Hotkey.KeyFlags.Ctrl | Hotkey.KeyFlags.Shift,
-                this.btnPause.PerformClick);
+                this.PauseOrContinue);
         }
 
         private void ShowOrDisplay()
@@ -74,7 +74,11 @@ namespace AndroidHelper
 
         private void BtnParams_Click(object sender, EventArgs e)
         {
-            script?.SetParameters();
+            if (script != null)
+            {
+                script.SetParameters();
+                Log("-->应用新的参数");
+            }
         }
 
         private void FrmMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -97,15 +101,26 @@ namespace AndroidHelper
 
                 btnRun.Enabled = true;
                 btnParams.Enabled = script.HasParameters;
+                Log("-->选择任务：" + script.Name);
+                if (!string.IsNullOrWhiteSpace(script.Desc))
+                {
+                    Log("-->" + script.Desc);
+                }
             }
         }
 
         private void BtnPause_Click(object sender, EventArgs e)
         {
+            PauseOrContinue();
+        }
+
+        private void PauseOrContinue()
+        {
             if (!btnPause.Enabled)
             {
                 return;
             }
+
             if (btnPause.Text == PAUSE_BUTTON_TEXT)
             {
                 Log("-->暂停");
@@ -118,6 +133,7 @@ namespace AndroidHelper
                 script.Continue();
                 btnPause.Text = PAUSE_BUTTON_TEXT;
             }
+
             SetScriptState();
         }
 
@@ -141,7 +157,7 @@ namespace AndroidHelper
             }
             SetScriptState();
         }
-        internal void NeedParameters(object sender, NeedParameterArgs e)
+        private void NeedParameters(object sender, NeedParameterArgs e)
         {
             var parameters = new FrmParameters();
             parameters.SetParameters(e.Parameters);
@@ -150,6 +166,7 @@ namespace AndroidHelper
             {
                 e.IsCancel = true;
             }
+            Log("-->设置参数");
         }
         private void BtnSelect_Click(object sender, EventArgs e)
         {
@@ -183,7 +200,7 @@ namespace AndroidHelper
         {
             this.InvokeAction(() =>
             {
-                Log("-->全部执行完成");
+                Log("-->执行结束");
                 btnRun.Text = START_BUTTON_TEXT;
                 btnPause.Text = PAUSE_BUTTON_TEXT;
                 btnSelect.Enabled = true;
@@ -195,29 +212,29 @@ namespace AndroidHelper
         {
             if (script == null)
             {
-                lblInfo2.Text = lblScriptInfo.Text = "未选择脚本...";
+                niIcon.Text = lblInfo2.Text = lblScriptInfo.Text = "未选择脚本...";
             }
 
             var status = script.Context.Status;
             switch (status)
             {
                 case Status.Cancelled:
-                    lblInfo2.Text = "已中止执行";
+                    niIcon.Text = lblInfo2.Text = "已中止执行";
                     break;
                 case Status.Cancelling:
-                    lblInfo2.Text = "正在中止执行";
+                    niIcon.Text = lblInfo2.Text = "正在中止执行";
                     break;
                 case Status.Running:
-                    lblInfo2.Text = "正在执行...";
+                    niIcon.Text = lblInfo2.Text = "正在执行...";
                     break;
                 case Status.Finished:
-                    lblInfo2.Text = "执行结束";
+                    niIcon.Text = lblInfo2.Text = "执行结束";
                     break;
                 case Status.Inited:
-                    lblInfo2.Text = "脚本已加载";
+                    niIcon.Text = lblInfo2.Text = "脚本已加载";
                     break;
                 case Status.Paused:
-                    lblInfo2.Text = "暂停中...";
+                    niIcon.Text = lblInfo2.Text = "暂停中...";
                     break;
             }
         }
@@ -274,9 +291,25 @@ namespace AndroidHelper
 
         private void Detector_UsbChanged(object sender, EventArgs e)
         {
-            Thread.Sleep(1000);
-            Global.GetMobileInfo();
+            if (Global.IsConnected && !Global.IsWifi && script?.Context.Status == Status.Running)
+            {
+                Global.GetMobileInfo();
+                if (!Global.IsConnected)
+                {
+                    PauseOrContinue();
+                }
+            }
+            else if (!Global.IsConnected && script?.Context.Status == Status.Paused)
+            {
+                Thread.Sleep(1000);
+                Global.GetMobileInfo();
+                if (Global.IsConnected)
+                {
+                    PauseOrContinue();
+                }
+            }
 
+            SetState();
         }
 
         private void SetState()

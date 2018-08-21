@@ -198,7 +198,6 @@
             // 
             // niIcon
             // 
-            this.niIcon.Text = "猜猜我是谁";
             this.niIcon.Visible = true;
             // 
             // FrmMain
