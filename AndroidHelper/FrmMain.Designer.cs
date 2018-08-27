@@ -46,6 +46,7 @@
             this.btnParams = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.niIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.btnCancel = new System.Windows.Forms.Button();
             this.pnlSet.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.SuspendLayout();
@@ -109,7 +110,8 @@
             // pnlSet
             // 
             this.pnlSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnlSet.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlSet.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSet.Controls.Add(this.btnCancel);
             this.pnlSet.Controls.Add(this.btnConnect);
             this.pnlSet.Controls.Add(this.rdoWifi);
             this.pnlSet.Controls.Add(this.rdoUsb);
@@ -160,8 +162,8 @@
             // 
             // pnlMain
             // 
-            this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.pnlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlMain.Controls.Add(this.btnParams);
             this.pnlMain.Controls.Add(this.pnlSet);
@@ -186,8 +188,8 @@
             // 
             // listBox1
             // 
-            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 12;
@@ -199,6 +201,15 @@
             // niIcon
             // 
             this.niIcon.Visible = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(114, 57);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(41, 23);
+            this.btnCancel.TabIndex = 5;
+            this.btnCancel.Text = "取消";
+            this.btnCancel.UseVisualStyleBackColor = true;
             // 
             // FrmMain
             // 
@@ -239,6 +250,7 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button btnParams;
         private System.Windows.Forms.NotifyIcon niIcon;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
 

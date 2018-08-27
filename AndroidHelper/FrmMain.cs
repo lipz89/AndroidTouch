@@ -26,6 +26,7 @@ namespace AndroidHelper
             detector = new DriveDetector();
             detector.UsbChanged += Detector_UsbChanged;
             btnConnect.Click += BtnConnect_Click;
+            btnCancel.Click += BtnCancel_Click;
             lblInfo1.Click += BtnLoad_Click;
             rdoUsb.CheckedChanged += RdoUsb_CheckedChanged;
             rdoWifi.CheckedChanged += RdoUsb_CheckedChanged;
@@ -47,6 +48,12 @@ namespace AndroidHelper
             this.niIcon.DoubleClick += NiIcon_DoubleClick;
             this.RegisterHotKeys();
         }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            pnlSet.Visible = false;
+        }
+
         private void NiIcon_DoubleClick(object sender, EventArgs e)
         {
             this.PauseOrContinue();
@@ -100,7 +107,6 @@ namespace AndroidHelper
                 script.CommandRunned += Script_CommandRunned;
 
                 btnRun.Enabled = true;
-                btnParams.Enabled = script.HasParameters;
                 Log("-->选择任务：" + script.Name);
                 if (!string.IsNullOrWhiteSpace(script.Desc))
                 {
@@ -146,6 +152,7 @@ namespace AndroidHelper
                 btnRun.Text = STOP_BUTTON_TEXT;
                 btnPause.Enabled = true;
                 btnSelect.Enabled = false;
+                btnParams.Enabled = script.HasParameters;
             }
             else
             {
@@ -213,6 +220,7 @@ namespace AndroidHelper
             if (script == null)
             {
                 niIcon.Text = lblInfo2.Text = lblScriptInfo.Text = "未选择脚本...";
+                return;
             }
 
             var status = script.Context.Status;
@@ -223,12 +231,15 @@ namespace AndroidHelper
                     break;
                 case Status.Cancelling:
                     niIcon.Text = lblInfo2.Text = "正在中止执行";
+                    btnParams.Enabled = false;
                     break;
                 case Status.Running:
                     niIcon.Text = lblInfo2.Text = "正在执行...";
+                    btnParams.Enabled = script.HasParameters;
                     break;
                 case Status.Finished:
                     niIcon.Text = lblInfo2.Text = "执行结束";
+                    btnParams.Enabled = false;
                     break;
                 case Status.Inited:
                     niIcon.Text = lblInfo2.Text = "脚本已加载";

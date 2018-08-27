@@ -27,7 +27,7 @@ namespace AndroidHelper
                 token.Running(this);
                 foreach (var command in this.commands)
                 {
-                    if (command.IsValid)
+                    if (command.IsValid && Global.Runner.IsTheGame() && !Global.Runner.IsLockedOrPowerOff())
                     {
                         command.Run(token);
                     }
