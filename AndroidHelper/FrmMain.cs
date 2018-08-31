@@ -81,11 +81,7 @@ namespace AndroidHelper
 
         private void BtnParams_Click(object sender, EventArgs e)
         {
-            if (script != null)
-            {
-                script.SetParameters();
-                Log("-->应用新的参数");
-            }
+            script?.SetParameters();
         }
 
         private void FrmMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -148,12 +144,14 @@ namespace AndroidHelper
         {
             if (btnRun.Text == START_BUTTON_TEXT)
             {
-                Log("-->开始");
-                script.Start();
-                btnRun.Text = STOP_BUTTON_TEXT;
-                btnPause.Enabled = true;
-                btnSelect.Enabled = false;
-                btnParams.Enabled = script.HasParameters;
+                if (script.Start())
+                {
+                    Log("-->开始");
+                    btnRun.Text = STOP_BUTTON_TEXT;
+                    btnPause.Enabled = true;
+                    btnSelect.Enabled = false;
+                    btnParams.Enabled = script.HasParameters;
+                }
             }
             else
             {
@@ -173,6 +171,7 @@ namespace AndroidHelper
             if (dlgResult != DialogResult.OK)
             {
                 e.IsCancel = true;
+                return;
             }
             Log("-->设置参数");
         }

@@ -27,7 +27,6 @@ namespace AndroidHelper
                 token.Running(this);
                 foreach (var command in this.commands)
                 {
-                    token.Wait();
                     if (command.IsValid)
                     {
                         if (Global.Runner.IsTheGame() && !Global.Runner.IsLockedOrPowerOff())
@@ -39,6 +38,7 @@ namespace AndroidHelper
                             token.Break("界面被切换或屏幕被关闭。");
                         }
                     }
+                    token.Wait();
                 }
             }
         }

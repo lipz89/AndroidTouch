@@ -4,7 +4,7 @@ namespace AndroidHelper
 {
     interface IScript : IDisposable
     {
-        void Start();
+        bool Start();
         void Stop();
         void Pause();
         void Continue();

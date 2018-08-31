@@ -20,12 +20,12 @@ namespace AndroidHelper
             this.context = new ScriptContext();
             this.context.Status = Status.Inited;
         }
-        public void Start()
+        public bool Start()
         {
             if (parameters.Any(x => x.Value == null))
             {
                 if (!SetParameters())
-                    return;
+                    return false;
             }
             context.Status = Status.Running;
             context.IsCancel = false;
@@ -53,6 +53,7 @@ namespace AndroidHelper
             });
             thread.IsBackground = true;
             thread.Start();
+            return true;
         }
         public void Stop()
         {
