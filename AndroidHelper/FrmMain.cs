@@ -105,6 +105,7 @@ namespace AndroidHelper
                 script.NeedParameters += NeedParameters;
                 script.CommandRunning += Script_CommandRunning;
                 script.CommandRunned += Script_CommandRunned;
+                script.Broken += Script_Broken;
 
                 btnRun.Enabled = true;
                 Log("-->选择任务：" + script.Name);
@@ -189,6 +190,13 @@ namespace AndroidHelper
         private void Script_CommandRunning(object sender, CommondRunArgs e)
         {
             this.Log(e.Commond.ToString());
+        }
+
+        private void Script_Broken(object sender, BrokenArgs e)
+        {
+            this.Log("-->暂停：" + e.Reason);
+            script.Pause();
+            btnPause.Text = CONTINUE_BUTTON_TEXT;
         }
 
         private void Log(string info)

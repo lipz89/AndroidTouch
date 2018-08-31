@@ -99,6 +99,11 @@ namespace AndroidHelper
             add => context.CommandRunned += value;
             remove => context.CommandRunned -= value;
         }
+        public event EventHandler<BrokenArgs> Broken
+        {
+            add => context.Broken += value;
+            remove => context.Broken -= value;
+        }
         public event EventHandler Stopped
         {
             add => stopped += value;

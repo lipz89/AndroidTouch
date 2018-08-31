@@ -17,6 +17,7 @@ namespace AndroidHelper
         event EventHandler Stopped;
         event EventHandler<CommondRunArgs> CommandRunning;
         event EventHandler<CommondRunArgs> CommandRunned;
+        event EventHandler<BrokenArgs> Broken;
         event EventHandler<NeedParameterArgs> NeedParameters;
     }
 }

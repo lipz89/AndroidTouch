@@ -27,9 +27,17 @@ namespace AndroidHelper
                 token.Running(this);
                 foreach (var command in this.commands)
                 {
-                    if (command.IsValid && Global.Runner.IsTheGame() && !Global.Runner.IsLockedOrPowerOff())
+                    token.Wait();
+                    if (command.IsValid)
                     {
-                        command.Run(token);
+                        if (Global.Runner.IsTheGame() && !Global.Runner.IsLockedOrPowerOff())
+                        {
+                            command.Run(token);
+                        }
+                        else
+                        {
+                            token.Break("界面被切换或屏幕被关闭。");
+                        }
                     }
                 }
             }
@@ -45,8 +53,8 @@ namespace AndroidHelper
         public override string ToString()
         {
             return Total.Value > 0
-                ? new string(' ', Depth * 4) + $"执行循环[{Name}]: {Count} / {Total} 次"
-                : new string(' ', Depth * 4) + $"执行循环[{Name}]: {Count} / 无限 次";
+                ? new string(' ', Depth * 4) + $"执行循环[{Name}]: {Count + 1} / {Total} 次"
+                : new string(' ', Depth * 4) + $"执行循环[{Name}]: {Count + 1} / 无限 次";
         }
     }
 }

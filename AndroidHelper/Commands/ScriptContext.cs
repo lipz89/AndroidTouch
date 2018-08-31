@@ -7,6 +7,7 @@ namespace AndroidHelper
     {
         internal event EventHandler<CommondRunArgs> CommandRunned;
         internal event EventHandler<CommondRunArgs> CommandRunning;
+        internal event EventHandler<BrokenArgs> Broken;
 
         public ScriptContext()
         {
@@ -36,6 +37,11 @@ namespace AndroidHelper
         {
             resetEvent.Reset();
             Status = Status.Paused;
+        }
+
+        public void Break(string reason)
+        {
+            Broken?.Invoke(this, new BrokenArgs() { Reason = reason });
         }
     }
 }

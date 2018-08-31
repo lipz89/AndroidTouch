@@ -9,5 +9,6 @@
         void Wait();
         void Set();
         void Reset();
+        void Break(string reason);
     }
 }

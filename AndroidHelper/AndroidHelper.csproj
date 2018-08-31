@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="AdbRunner.cs" />
     <Compile Include="Commands\BaseCommond.cs" />
+    <Compile Include="Commands\BrokenArgs.cs" />
     <Compile Include="Commands\CommondRunArgs.cs" />
     <Compile Include="Commands\ScriptSelectedArgs.cs" />
     <Compile Include="DriveDetector.cs" />
