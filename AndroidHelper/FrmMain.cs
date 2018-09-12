@@ -22,6 +22,7 @@ namespace AndroidHelper
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
+
             hotkey = new Hotkey(this.Handle);
             detector = new DriveDetector();
             detector.UsbChanged += Detector_UsbChanged;
@@ -196,6 +197,7 @@ namespace AndroidHelper
             this.Log("-->暂停：" + e.Reason);
             script.Pause();
             btnPause.Text = CONTINUE_BUTTON_TEXT;
+            SetScriptState();
         }
 
         private void Log(string info)
@@ -212,8 +214,7 @@ namespace AndroidHelper
 
         private void Script_Stopped(object sender, EventArgs e)
         {
-            this.InvokeAction(() =>
-            {
+            this.InvokeAction(() => {
                 Log("-->执行结束");
                 btnRun.Text = START_BUTTON_TEXT;
                 btnPause.Text = PAUSE_BUTTON_TEXT;
@@ -265,8 +266,7 @@ namespace AndroidHelper
         private void FrmMain_Shown(object sender, EventArgs e)
         {
             pnlMain.Enabled = false;
-            this.InvokeAction(() =>
-            {
+            this.InvokeAction(() => {
                 Global.Init();
                 SetState();
                 pnlMain.Enabled = true;
@@ -375,8 +375,7 @@ namespace AndroidHelper
 
         private void InvokeAction(ThreadStart action)
         {
-            var th = new Thread(() =>
-            {
+            var th = new Thread(() => {
                 if (!this.IsDisposed)
                     this.Invoke(action);
             });
