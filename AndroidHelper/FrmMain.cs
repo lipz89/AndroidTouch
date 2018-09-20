@@ -15,6 +15,7 @@ namespace AndroidHelper
         private const string STOP_BUTTON_TEXT = "停止(&S)";
         private const string PAUSE_BUTTON_TEXT = "暂停(&P)";
         private const string CONTINUE_BUTTON_TEXT = "继续(&P)";
+        private bool isExpand = true;
 
         private IScript script = null;
 
@@ -27,8 +28,6 @@ namespace AndroidHelper
             detector = new DriveDetector();
             detector.UsbChanged += Detector_UsbChanged;
             btnConnect.Click += BtnConnect_Click;
-            btnCancel.Click += BtnCancel_Click;
-            lblInfo1.Click += BtnLoad_Click;
             rdoUsb.CheckedChanged += RdoUsb_CheckedChanged;
             rdoWifi.CheckedChanged += RdoUsb_CheckedChanged;
             lblInfo1.Text = "正在初始化...";
@@ -42,17 +41,81 @@ namespace AndroidHelper
             btnPause.Click += BtnPause_Click;
             btnParams.Click += BtnParams_Click;
             this.Closing += FrmMain_Closing;
+            this.label1.Width = this.label1.Height;
+            this.label1.BorderStyle = BorderStyle.FixedSingle;
+            this.label1.Text = "-";
+            this.label4.Text = "未设定";
+            this.label1.Click += Label1_Click;
+            this.btnShutScreen.Click += BtnShutScreen_Click;
+            this.btnSetShutdownTime.Click += BtnSetShutdownTime_Click;
 
             this.Shown += FrmMain_Shown;
             this.niIcon.Icon = this.Icon;
             this.niIcon.Visible = true;
             this.niIcon.DoubleClick += NiIcon_DoubleClick;
             this.RegisterHotKeys();
+            this.ShowOrHideSet();
         }
 
-        private void BtnCancel_Click(object sender, EventArgs e)
+        private void BtnSetShutdownTime_Click(object sender, EventArgs e)
         {
-            pnlSet.Visible = false;
+            if (this.btnSetShutdownTime.Tag == null)
+            {
+                var isCancel = false;
+                if (script == null || script.Context.Status != Status.Running)
+                {
+                    isCancel = DialogResult.Yes != MessageBox.Show(this, "当前未执行任务，确定要设定自动关机吗？", "提示", MessageBoxButtons.YesNo);
+                }
+
+                if (isCancel)
+                {
+                    return;
+                }
+
+                this.btnSetShutdownTime.Tag = true;
+                this.btnSetShutdownTime.Text = "取消";
+                this.nudTime.Enabled = false;
+                var hours = (int)nudTime.Value;
+                var seconds = hours * 3600;
+                var date = DateTime.Now.AddHours(hours);
+                this.label4.Text = $"将于 {date:HH:mm:ss} 自动关机";
+                SystemApi.ShutDownAt(seconds);
+            }
+            else
+            {
+                this.btnSetShutdownTime.Tag = null;
+                this.btnSetShutdownTime.Text = "定时关机";
+                this.nudTime.Enabled = true;
+                this.label4.Text = "未设定";
+                SystemApi.CancelShutDown();
+            }
+        }
+
+        private void BtnShutScreen_Click(object sender, EventArgs e)
+        {
+            SystemApi.TurnOff();
+        }
+
+        private void Label1_Click(object sender, EventArgs e)
+        {
+            ShowOrHideSet();
+        }
+
+        private void ShowOrHideSet()
+        {
+            isExpand = !isExpand;
+            if (isExpand)
+            {
+                this.label1.Text = "-";
+                this.pnlSet.Visible = isExpand;
+                this.Height += this.pnlSet.Height;
+            }
+            else
+            {
+                this.label1.Text = "+";
+                this.pnlSet.Visible = isExpand;
+                this.Height -= this.pnlSet.Height;
+            }
         }
 
         private void NiIcon_DoubleClick(object sender, EventArgs e)
@@ -194,6 +257,7 @@ namespace AndroidHelper
 
         private void Script_Broken(object sender, BrokenArgs e)
         {
+            SystemApi.TurnOn();
             this.Log("-->暂停：" + e.Reason);
             script.Pause();
             btnPause.Text = CONTINUE_BUTTON_TEXT;
@@ -273,21 +337,13 @@ namespace AndroidHelper
             });
         }
 
-        private void BtnLoad_Click(object sender, EventArgs e)
+        private void BtnConnect_Click(object sender, EventArgs e)
         {
             if (!Global.IsLoaded)
             {
                 Global.LoadAdb();
                 SetState();
             }
-            else
-            {
-                pnlSet.Visible = true;
-            }
-        }
-
-        private void BtnConnect_Click(object sender, EventArgs e)
-        {
             if (rdoWifi.Checked)
             {
                 var ip = txtIp.Text.Trim();
@@ -347,7 +403,6 @@ namespace AndroidHelper
                     rdoUsb.Checked = true;
                 }
                 lblInfo1.Text = info;
-                pnlSet.Visible = false;
             }
             else if (Global.IsLoaded)
             {

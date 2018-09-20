@@ -95,6 +95,7 @@
     <Compile Include="Commands\Status.cs" />
     <Compile Include="Commands\SwipeCommand.cs" />
     <Compile Include="Commands\TapCommand.cs" />
+    <Compile Include="SystemApi.cs" />
     <Compile Include="UcParameter.cs">
       <SubType>UserControl</SubType>
     </Compile>
